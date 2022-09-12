@@ -2,6 +2,7 @@ const fs = require('fs');
 const http = require('http');
 const url = require('url');
 const replaceTemplate = require('./modules/replaceTemplate');
+const slugify = require('slugify');
 
 //// FILES
 
@@ -70,6 +71,9 @@ const server = http.createServer((req, res) => {
       .join('');
     const output = tempOverview.replace('{%PRODUCT_CARDS%}', cardsHTML);
     res.end(output);
+
+    const slugs = dataObj.map((el) => slugify(el.productName, { lower: true }));
+    console.log(slugs);
 
     // Product page
   } else if (pathname === '/product') {
